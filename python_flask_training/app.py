@@ -273,8 +273,6 @@ def edit_assignment(assignment_id):
         assignment=assignment
     )
 
-
-
 @app.route("/assignments/<int:assignment_id>/delete",
            methods=["POST"])
 def delete_assignment(assignment_id):
@@ -343,15 +341,6 @@ def ai_chat():
                     model="gemini-3.6-flash",
                     contents=question,
                     config={
-                        # "system_instruction": (
-                        #     "You are a friendly programming tutor "
-                        #     "helping beginner students learn Python, "
-                        #     "Flask, HTML, databases, and programming. "
-                        #     "Explain concepts clearly, step by step, "
-                        #     "using simple examples."
-                        # ),
-                        # "max_output_tokens": 500,
-
                         "system_instruction": (
                             "You are a friendly, helpful, and knowledgeable AI assistant. "
                                 "Answer questions on a wide range of subjects, including "
@@ -393,7 +382,6 @@ def ai_chat():
         question=question,
         answer=answer
     )
-
 
 if __name__ == "__main__":
     init_db()

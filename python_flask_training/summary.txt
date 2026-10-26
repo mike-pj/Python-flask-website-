@@ -358,23 +358,18 @@ Understand the code
 1. Define the route
 @app.route("/chat", methods=["GET", "POST"])
 
-
-
 - /chat is the webpage address.
 - GET allows the user to open the page.
 - POST allows the form to submit a question.
+
 2. Define the function
 def ai_chat():
-
-
-
 Flask runs this function whenever a request reaches the /chat route.
+
 3. Prepare the variables
 question = ""answer = ""
-
-
-
 We start with empty strings because the user has not submitted a question yet.
+
 4. Check whether the form was submitted
 if request.method == "POST":
 
