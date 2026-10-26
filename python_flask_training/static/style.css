@@ -1,0 +1,164 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fb;
+    color: #222222;
+    margin: 40px;
+}
+
+h1 {
+    color: #1769aa;
+}
+
+h2 {
+    color: #333333;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+ul {
+    background-color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+}
+
+
+/* AI Chat Interface */
+
+.chat-container {
+    max-width: 750px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.chat-header {
+    background-color: #1769aa;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.chat-header h1 {
+    color: white;
+    margin-top: 0;
+}
+
+.chat-header p {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.chat-messages {
+    padding: 20px;
+}
+
+.message {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+.message p {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.assistant-message {
+    background-color: #f0f5fa;
+    border-left: 4px solid #1769aa;
+}
+
+.user-message {
+    background-color: #e5f5e9;
+    border-left: 4px solid #27864b;
+}
+
+.answer-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+.chat-form {
+    padding: 20px;
+    border-top: 1px solid #dddddd;
+}
+
+.chat-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.chat-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.chat-form button {
+    margin-top: 12px;
+    background-color: #1769aa;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.chat-form button:hover {
+    background-color: #12558a;
+}
+
+.chat-footer {
+    padding: 0 20px 20px;
+}
+
+@media (max-width: 600px) {
+    body {
+        margin: 12px;
+    }
+
+    .chat-container {
+        margin: 0 auto;
+    }
+}
+
+
+/* Home page navigation buttons */
+
+.home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.action-button {
+    display: inline-block;
+    background-color: #1769aa;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.action-button:hover {
+    background-color: #12558a;
+}
+

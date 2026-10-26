@@ -1,0 +1,469 @@
+Set your environment
+python3 --version
+python3 -m pip --version
+
+Enter VsCode terminal, run:
+mkdir python_flask_training
+
+Enter the folder:
+cd python_flask_training
+
+confirm you are inside:
+pwd
+
+Create a Python virtual environment:
+python3 -m venv .venv :
+python3 — runs your installed Python.
+-m venv — runs Python's built-in virtual environment tool.
+.venv — the name of the environment folder we are creating.
+
+Reason for a virtual environment (.venv):
+A virtual environment keeps the packages for this project separate from other Python projects on your Mac. This helps prevent dependency conflicts.
+
+Activate the environment:
+source .venv/bin/activate
+That (.venv) confirms that your project is using its own Python environment.
+
+Install Flask:
+python -m pip install Flask
+
+Why are we installing Flask?
+Python can run programs, but Flask gives us tools to build web applications. It allows us to connect URLs to Python functions, receive requests from a browser, and return web pages.
+
+Create a Python file
+In VS Code:
+1. Look at the Explorer panel on the left.
+2. Find your python_flask_training folder.
+3. Create a new file named app.py.
+
+Creates the Flask application object. We use the variable app to configure and run our application:
+app = Flask(__name__)
+
+This is a route decorator. It tells Flask to run the function below it when someone visits the homepage / :
+@app.route("/")
+
+Defines a Python function that returns a response to the browser:
+def home():
+    return "Welcome to Python Web Development!"
+
+These lines start the local development server when you run app.py directly. Debug mode helps you identify errors while developing; use it only for local development, not production:
+if __name__ == "__main__":
+    app.run(debug=True)
+
+Run app:
+python app.py
+
+Create a templates folder inside the python_flask_training folder
+
+Create a file inside the templates folder and name it "index.html"
+
+On the file, write your code
+
+HTML Code: Understand the HTML code
+Code	What it does
+<!DOCTYPE html>	Tells the browser to interpret the page as HTML5.
+<html lang="en">	Starts the HTML document and identifies English as its language.
+<head>	Holds page information and settings.
+<meta charset="UTF-8">	Supports a wide range of characters.
+<meta name="viewport" ...>	Helps the page display correctly on mobile devices.
+<title>	Sets the browser tab's title.
+<body>	Contains the content visitors see.
+<h1> and <h2>	Create main and secondary headings.
+<p>	Creates a paragraph.
+<ul> and <li>	Create a bulleted list and its items.
+
+
+Why did we change the code?
+- from flask import Flask, render_template imports Flask and the function that loads HTML templates.
+- app = Flask(__name__) creates the Flask application.
+- @app.route("/") tells Flask which function handles requests to the website's home page.
+- def home(): defines the function that responds to that request.
+- render_template("index.html") tells Flask to find index.html inside the templates folder and return the rendered page.
+- app.run(debug=True) starts the local development server with debugging enabled.
+Notice that we now use render_template() instead of returning a plain text string.
+
+Style website with CSS
+Aim: Learn how to make a plain HTML page look like a professional website.
+This is important for your Student Assignment Tracker project: Flask will handle the application logic, HTML will structure the content, and CSS will control the appearance.
+
+Create style.css file so we can work on the appearance:
+-create new folder name it "static"
+-inside the static folder create a file name "style.css"
+
+Go to index.html file in the templates folder, inbetween the head tags write this:
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+ This above is to link the css to the html
+
+Important teaching point: url_for('static', filename='style.css') tells Flask to generate the correct URL for the CSS file in the static folder. The double curly braces are part of Flask's Jinja template syntax.
+
+There are two separate things:
+- Route: The URL path and the Python function that handles a request.
+- Template: The HTML file that Flask can render for the browser.
+
+Here, Flask connects /about to the about() function, which renders about.html.
+This distinction is important when we build larger applications.
+
+Lesson objectives for next week 19th October 2026
+1. Lesson objectives
+By the end of the class, students should be able to:
+- Explain how Flask handles a browser request.
+- Create routes and render HTML templates.
+- Explain the purpose of Flask's templates and static folders.
+- Use Python data inside HTML through Jinja.
+- Build an assignment submission form using GET and POST.
+- Submit an assignment and display it on the tracker page.
+
+
+Step 2: Revise the existing application
+Ask your students:
+1. What is Flask?
+2. What does @app.route("/") do?
+3. What is the purpose of render_template()?
+4. Why do we separate HTML files from Python code?
+
+Teaching explanation: Flask is a Python web framework. A route connects a URL to a Python function. The function can return a response directly or render an HTML template.
+HTML defines what the user sees, Python controls what the application does, and Flask connects the two.
+
+@app.route("/about")
+def about():
+    return "<h1>About Us</h1>"
+
+When a browser visits /about, Flask executes the about() function and sends the HTML response to the browser.
+
+Explanation of app.py:
+
+from flask import Flask, render_template, request, redirect, url_for :-
+Flask creates the application.
+render_template loads an HTML template.
+request reads information sent by the browser.
+redirect sends the browser to another URL.
+url_for generates a URL for a Flask endpoint.
+
+@app.route("/assignments", methods=["GET", "POST"]):-
+GET is used when the student opens the assignment page. POST is used when the student submits the form.
+
+title = request.form.get("title", "").strip() :-
+Flask reads the value from the form field named title. The .strip() method removes unnecessary spaces at the beginning and end.
+
+if not title or not due_date: :-
+This checks whether either required value is empty. If a field is missing, Flask sends an error message to the template.
+
+assignment_list.append(new_assignment) :-
+The append() method adds the new dictionary to the existing list.
+
+return redirect(url_for("assignments")) :-
+This sends the browser back to the assignment page after a successful submission. It helps prevent accidental duplicate submissions when the page is refreshed.
+
+Explanation of assignment.py:-
+
+Explain the form
+HTML code	Purpose
+<form>	        Creates the form that collects information.
+method="POST"	Sends submitted information to Flask using POST.
+name="title"	Identifies the title field so Python can retrieve it.
+type="date"	    Provides a date input control in the browser.
+required	    Asks the browser to require the field before normal submission.
+                required is browser-side validation. Server-side validation in Python is still necessary because browser checks can be bypassed.
+<button type="submit">	 Submits the form.
+
+Run Flask:
+python3 app.py
+
+Open this page:
+http://127.0.0.1:5000/assignments
+
+Ask the students to:
+1. Enter Database Fundamentals as the assignment title.
+2. Select a due date.
+3. Click Add Assignment.
+4. Confirm that the new assignment appears with the status Pending.
+5. Refresh the page and observe what happens.
+
+
+ {% if assignments %}
+
+        <ul>
+            {% for assignment in assignments %}
+
+                <li>
+                    <h2>{{ assignment.title }}</h2>
+
+                    <p>Due Date: {{ assignment.due_date }}</p>
+
+                    <p>Status: {{ assignment.status }}</p>
+                </li>
+
+            {% endfor %}
+        </ul>
+
+    {% else %}
+
+        <p>No assignments have been added yet.</p>
+
+    {% endif %}
+
+Python stores the assignment information. Your HTML template displays it.
+Jinja is the template engine Flask uses to connect the two. It gives us special syntax that we can write inside HTML.
+There are two important types of Jinja syntax in your code:
+- {{ }} — display a value.Use it when you want to show data from Python or a template variable.
+- {% %} — perform template logic, such as conditions and loops.They tell Jinja to perform an action or control the flow of the template.
+
+Add the ability to edit an assignment:
+-Create templates/edit_assignment.html:
+-What is happening here?
+- value="{{ assignment.title }}" fills the input with the assignment's existing title.
+- value="{{ assignment.due_date }}" fills in its existing due date.
+- The {% if %} condition adds selected to the matching status option.
+- method="POST" sends the changed values to Flask when the student submits the form.
+
+Understand the important SQL statement
+UPDATE assignments
+SET title = ?, due_date = ?, status = ?
+WHERE id = ?
+
+- UPDATE assignments — modify a record in the assignments table.
+- SET — specify the new values.
+- WHERE id = ? — change only the record with the matching ID.
+Why is WHERE id = ? so important?
+Without the WHERE condition, an update could change every assignment in the table. The ID ensures we target the intended record.
+The question-mark placeholders also help protect against SQL injection.
+
+Add an Edit link to the assignment list:
+-Open templates/assignments.html.
+-<p>Status: {{ assignment.status }}</p>
+-Immediately beneath it, add:
+-<p>
+    <a href="{{ url_for('edit_assignment',
+                        assignment_id=assignment.id) }}">
+        Edit Assignment
+    </a>
+</p>
+
+Add a delete route to app.py:
+-Open app.py and add this route below your edit route, but above if __name__ == "__main__":.
+
+@app.route("/assignments/<int:assignment_id>/delete",
+           methods=["POST"])
+def delete_assignment(assignment_id):
+
+    connection = get_db_connection()
+
+    assignment = connection.execute(
+        "SELECT id FROM assignments WHERE id = ?",
+        (assignment_id,)
+    ).fetchone()
+
+    if assignment is None:
+        connection.close()
+        return "Assignment not found", 404
+
+    connection.execute(
+        "DELETE FROM assignments WHERE id = ?",
+        (assignment_id,)
+    )
+
+    connection.commit()
+    connection.close()
+
+    return redirect(url_for("assignments"))
+
+
+Understand the important parts
+@app.route(...) defines the URL that handles a deletion request.
+methods=["POST"] means the route accepts POST requests. We use POST instead of a simple link with GET because deleting a record changes data.
+
+"DELETE FROM assignments WHERE id = ?":
+-This SQL statement removes the record matching the supplied assignment ID.
+The ? placeholder safely passes the ID into the query.
+
+return redirect(url_for("assignments")):
+-After deleting the assignment, Flask sends the user back to the assignments list.
+
+Add a Delete button to assignments.html:
+-Find the section inside your {% for assignment in assignments %} loop where you added the Edit Assignment link.
+Immediately below the Edit link, add this form:
+
+<form action="{{ url_for('delete_assignment',
+                         assignment_id=assignment.id) }}"
+      method="POST"
+      onsubmit="return confirm('Are you sure you want to delete this assignment?');">
+
+    <button type="submit">Delete Assignment</button>
+
+</form>
+
+Code	                                                Meaning
+url_for()	                                Flask function that generates a URL for a route.
+'delete_assignment'	                        The name of your Python route function.
+assignment_id=assignment.id	                Supplies the current assignment's ID to that route.
+
+The key lesson: 
+assignment.id retrieves the current assignment's ID, 
+while assignment_id = tells Flask which named route parameter should receive that value when generating the URL.
+
+Six assignment CRUD practice examples
+No.	Original assignment title	Original due date	Update the title to	                New due date	New status
+1	HTML and CSS Basics	        2026-10-25	        Responsive Website Design	        2026-10-27	    Submitted
+2	Python Variables	        2026-10-26	        Python Data Types	                2026-10-28	    Submitted
+3	Python Functions	        2026-10-28	        Functions and Return Statements	    2026-10-30	    Pending
+4	Introduction to Flask	    2026-10-29	        Building Flask Routes	            2026-11-01	    Submitted
+5	Database Fundamentals	    2026-10-30	        SQLite CRUD Operations	            2026-11-02	    Pending
+6	Jinja Templates	2           026-11-01	        Dynamic HTML with Jinja	            2026-11-04	    Submitted
+
+Instructions for your students
+1. Create: Add all six original assignments using their original titles and due dates. Their initial status should be Pending.
+2. Read: Confirm that all six assignments appear on the assignments page.
+3. Update: Click Edit Assignment for each record. Change its title, due date, and status to the corresponding updated values in the table.
+4. Verify: Return to the assignments page and confirm that each assignment displays its new details.
+5. Delete: Choose any one assignment, delete it, and confirm that it disappears from the list.
+6. Test persistence: Restart the Flask application and check that the remaining assignments are still available.
+
+
+
+AI Learning Assistant:
+Our plan
+We will work through these steps in order:
+1. Create a new Flask route for the chat box.
+2. Build the chat interface using HTML and your existing CSS style.
+3. Accept questions from the user through a form.
+4. Process the questions in Python and display responses.
+5. Connect a real AI model using an API, so the chat box can answer a variety of questions.
+6. Test the application and prepare students to explain and defend their work.
+
+Create the AI chat page
+Aim: Build a webpage where students can type a question and submit it to Flask.
+
+Create a new HTML file
+In VS Code:
+1. Open the templates folder.
+2. Right-click it and select New File.
+3. Name the file ai_chat.html.
+
+after pasting the code:
+Understand the important parts
+Code	                Purpose
+method="POST"	        Sends the student's question to Flask in the form body.
+name="message"	        Identifies the form field Flask will read.
+{{ question }}	        Displays the question passed from Python.
+{% if answer %}	        Displays the response section only when an answer exists.
+{{ answer }}	        Displays the response returned by Python.
+url_for('ai_chat')	    Generates the URL for the Flask route named ai_chat.
+
+Add the AI chat route in app.py:
+Aim: Teach Flask how to open the chat page, receive a student's question, and send a response back to the webpage.
+
+
+
+Understand the code
+1. Define the route
+@app.route("/chat", methods=["GET", "POST"])
+
+
+
+- /chat is the webpage address.
+- GET allows the user to open the page.
+- POST allows the form to submit a question.
+2. Define the function
+def ai_chat():
+
+
+
+Flask runs this function whenever a request reaches the /chat route.
+3. Prepare the variables
+question = ""answer = ""
+
+
+
+We start with empty strings because the user has not submitted a question yet.
+4. Check whether the form was submitted
+if request.method == "POST":
+
+If the student submits the form, Flask enters this block.
+5. Collect the student's question
+question = request.form.get("message", "").strip()
+
+- request.form contains the submitted form fields.
+- "message" matches name="message" in ai_chat.html.
+- .strip() removes unnecessary spaces from the beginning and end.
+- "" is the fallback if the field is missing.
+
+6. Generate a temporary response
+For now, Python constructs a message using the submitted question. This is only a demonstration; it is not yet a genuine AI-generated answer.
+
+7. Return the HTML page
+return render_template(    "ai_chat.html",    question=question,    answer=answer)
+This sends the page back to the browser and makes the question and answer variables available to Jinja.
+
+run the server and test the ai chat wether the demo response is working before we actually connect to a real AI model
+
+Choose the AI provider and get an API key:
+For this classroom project, I recommend Google Gemini API as our starting point. It has an official Python SDK and offers a free tier for eligible models, subject to usage limits and availability. That makes it a practical option for learning without committing to paid usage immediately.
+
+Create your Gemini API key
+
+Google AI Studio
+
+Where you'll create and manage your API key.
+
+https://aistudio.google.com/apikey?utm_source=chatgpt.com
+
+Open Google AI Studio API Keys
+
+1. Open the link above and sign in with your Google account.
+2. Follow the prompts to create an API key. You may need to create or select a project.
+3. Copy the key and keep it somewhere private and secure.
+
+Security rule: Never paste your API key into this chat, put it in your HTML file, or upload it to GitHub. We'll store it safely on your computer and have Flask read it from there.
+
+Install the Gemini Python package:
+python -m pip install google-genai
+
+Confirm the installation:
+-After the installation finishes, run:
+-python -c "from google import genai; print('Gemini SDK installed successfully')"
+
+Store your API key securely
+Instead of writing your secret API key directly inside app.py, we'll store it in a .env file. Python will read it when the application starts.
+
+Install python-dotenv:
+python -m pip install python-dotenv
+
+Create a .env file:
+Place API KEY there
+
+Create a .gitignore file
+In the same main project folder, create a file named .gitignore if one does not already exist.
+Add the following inside it:
+.env
+.venv/
+__pycache__/
+assignments.db
+
+Go to app.py and update by adding the below:
+import os
+from dotenv import load_dotenv
+from google import genai
+
+Why do we need them?
+- os lets Python read environment variables.
+- load_dotenv loads the values stored in your .env file.
+- genai gives Python access to Google's Gemini SDK.
+
+Directly below your imports, add:
+load_dotenv()
+
+api_key = os.getenv("GEMINI_API_KEY")
+
+if not api_key:
+    raise RuntimeError(
+        "GEMINI_API_KEY is missing. Check your .env file."
+    )
+
+client = genai.Client(api_key=api_key)
+
+This loads your secret key and creates a client that can send requests to Gemini. The SDK supports this client configuration.
+
+This uses Gemini's content-generation method to send the student's question and receive generated text
+
+Test you chat_ai and Ask:
+“Explain Python functions to a beginner. Include the meaning, syntax, a complete code example, and the output.”
